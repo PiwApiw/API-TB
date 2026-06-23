@@ -18,37 +18,37 @@ INSERT INTO categories (name, slug, description, image_url) VALUES
     'Elektronik',
     'elektronik',
     'Perangkat elektronik, gadget, dan aksesoris teknologi terbaru',
-    'https://placehold.co/400x300?text=Elektronik'
+    'https://picsum.photos/seed/elektronik/400/300'
   ),
   (
     'Fashion Pria',
     'fashion-pria',
     'Pakaian, sepatu, dan aksesoris pria terkini',
-    'https://placehold.co/400x300?text=Fashion+Pria'
+    'https://picsum.photos/seed/fashion-pria/400/300'
   ),
   (
     'Fashion Wanita',
     'fashion-wanita',
     'Pakaian, sepatu, tas, dan aksesoris wanita terlengkap',
-    'https://placehold.co/400x300?text=Fashion+Wanita'
+    'https://picsum.photos/seed/fashion-wanita/400/300'
   ),
   (
     'Makanan & Minuman',
     'makanan-minuman',
     'Makanan ringan, minuman, dan bahan makanan berkualitas',
-    'https://placehold.co/400x300?text=Makanan+Minuman'
+    'https://picsum.photos/seed/makanan-minuman/400/300'
   ),
   (
     'Kesehatan & Kecantikan',
     'kesehatan-kecantikan',
     'Produk perawatan tubuh, skincare, dan suplemen kesehatan',
-    'https://placehold.co/400x300?text=Kesehatan+Kecantikan'
+    'https://picsum.photos/seed/kesehatan-kecantikan/400/300'
   ),
   (
     'Rumah Tangga',
     'rumah-tangga',
     'Peralatan rumah tangga, dekorasi, dan kebutuhan harian',
-    'https://placehold.co/400x300?text=Rumah+Tangga'
+    'https://picsum.photos/seed/rumah-tangga/400/300'
   );
 
 
@@ -66,7 +66,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     8500000.00,
     25,
     (SELECT id FROM categories WHERE slug = 'elektronik'),
-    'https://placehold.co/400x300?text=ASUS+VivoBook'
+    'https://picsum.photos/seed/laptop-asus/400/300'
   ),
   (
     'Samsung Galaxy A54 5G',
@@ -75,7 +75,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     5299000.00,
     50,
     (SELECT id FROM categories WHERE slug = 'elektronik'),
-    'https://placehold.co/400x300?text=Samsung+A54'
+    'https://picsum.photos/seed/samsung-a54/400/300'
   ),
   (
     'TWS Earbuds Pro Bluetooth 5.3',
@@ -84,7 +84,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     349000.00,
     100,
     (SELECT id FROM categories WHERE slug = 'elektronik'),
-    'https://placehold.co/400x300?text=TWS+Earbuds'
+    'https://picsum.photos/seed/tws-earbuds/400/300'
   );
 
 -- ---- Kategori: Fashion Pria ----
@@ -96,7 +96,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     89000.00,
     200,
     (SELECT id FROM categories WHERE slug = 'fashion-pria'),
-    'https://placehold.co/400x300?text=Kaos+Polos+Pria'
+    'https://picsum.photos/seed/kaos-polos/400/300'
   ),
   (
     'Celana Chino Pria Slim Fit',
@@ -105,7 +105,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     189000.00,
     80,
     (SELECT id FROM categories WHERE slug = 'fashion-pria'),
-    'https://placehold.co/400x300?text=Celana+Chino'
+    'https://picsum.photos/seed/celana-chino/400/300'
   ),
   (
     'Sepatu Sneakers Pria Casual',
@@ -114,7 +114,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     259000.00,
     60,
     (SELECT id FROM categories WHERE slug = 'fashion-pria'),
-    'https://placehold.co/400x300?text=Sneakers+Pria'
+    'https://picsum.photos/seed/sneakers-pria/400/300'
   );
 
 -- ---- Kategori: Fashion Wanita ----
@@ -126,7 +126,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     175000.00,
     70,
     (SELECT id FROM categories WHERE slug = 'fashion-wanita'),
-    'https://placehold.co/400x300?text=Dress+Floral'
+    'https://picsum.photos/seed/dress-floral/400/300'
   ),
   (
     'Tas Selempang Wanita Mini',
@@ -135,7 +135,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     145000.00,
     90,
     (SELECT id FROM categories WHERE slug = 'fashion-wanita'),
-    'https://placehold.co/400x300?text=Tas+Selempang'
+    'https://picsum.photos/seed/tas-selempang/400/300'
   ),
   (
     'Hijab Pashmina Diamond Italiano',
@@ -144,7 +144,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     55000.00,
     150,
     (SELECT id FROM categories WHERE slug = 'fashion-wanita'),
-    'https://placehold.co/400x300?text=Hijab+Pashmina'
+    'https://picsum.photos/seed/hijab-pashmina/400/300'
   );
 
 -- ---- Kategori: Makanan & Minuman ----
@@ -156,7 +156,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     78000.00,
     120,
     (SELECT id FROM categories WHERE slug = 'makanan-minuman'),
-    'https://placehold.co/400x300?text=Kopi+Gayo'
+    'https://picsum.photos/seed/kopi-gayo/400/300'
   ),
   (
     'Keripik Singkong Balado 500g',
@@ -165,7 +165,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     35000.00,
     200,
     (SELECT id FROM categories WHERE slug = 'makanan-minuman'),
-    'https://placehold.co/400x300?text=Keripik+Balado'
+    'https://picsum.photos/seed/keripik-balado/400/300'
   ),
   (
     'Madu Hutan Asli Kalimantan 500ml',
@@ -174,7 +174,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     125000.00,
     45,
     (SELECT id FROM categories WHERE slug = 'makanan-minuman'),
-    'https://placehold.co/400x300?text=Madu+Kalimantan'
+    'https://picsum.photos/seed/madu-kalimantan/400/300'
   );
 
 -- ---- Kategori: Kesehatan & Kecantikan ----
@@ -186,7 +186,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     92000.00,
     85,
     (SELECT id FROM categories WHERE slug = 'kesehatan-kecantikan'),
-    'https://placehold.co/400x300?text=Serum+Vitamin+C'
+    'https://picsum.photos/seed/serum-vitc/400/300'
   ),
   (
     'Sunscreen SPF 50+ PA++++ 60ml',
@@ -195,7 +195,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     68000.00,
     110,
     (SELECT id FROM categories WHERE slug = 'kesehatan-kecantikan'),
-    'https://placehold.co/400x300?text=Sunscreen+SPF50'
+    'https://picsum.photos/seed/sunscreen-spf50/400/300'
   ),
   (
     'Masker Wajah Green Tea Clay 100g',
@@ -204,7 +204,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     49000.00,
     95,
     (SELECT id FROM categories WHERE slug = 'kesehatan-kecantikan'),
-    'https://placehold.co/400x300?text=Masker+Green+Tea'
+    'https://picsum.photos/seed/masker-greentea/400/300'
   );
 
 -- ---- Kategori: Rumah Tangga ----
@@ -216,7 +216,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     275000.00,
     40,
     (SELECT id FROM categories WHERE slug = 'rumah-tangga'),
-    'https://placehold.co/400x300?text=Panci+Set'
+    'https://picsum.photos/seed/panci-set/400/300'
   ),
   (
     'Rak Sepatu Lipat 4 Tingkat',
@@ -225,7 +225,7 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     129000.00,
     55,
     (SELECT id FROM categories WHERE slug = 'rumah-tangga'),
-    'https://placehold.co/400x300?text=Rak+Sepatu'
+    'https://picsum.photos/seed/rak-sepatu/400/300'
   ),
   (
     'Lampu LED Meja Belajar Rechargeable',
@@ -234,5 +234,5 @@ INSERT INTO products (name, slug, description, price, stock, category_id, image_
     95000.00,
     65,
     (SELECT id FROM categories WHERE slug = 'rumah-tangga'),
-    'https://placehold.co/400x300?text=Lampu+LED+Meja'
+    'https://picsum.photos/seed/lampu-led/400/300'
   );
