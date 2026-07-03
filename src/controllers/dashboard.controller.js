@@ -203,18 +203,10 @@ export const getRecentOrders = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit, 10) || 5;
 
+    // Ambil pesanan terbaru — tanpa join profiles (orders.user_id → auth.users, bukan profiles)
     const { data: orders, error } = await supabaseAdmin
       .from('orders')
-      .select(`
-        id,
-        status,
-        total_amount,
-        created_at,
-        profiles!orders_user_id_fkey (
-          full_name,
-          phone
-        )
-      `)
+      .select('id, status, total_amount, user_id, created_at')
       .order('created_at', { ascending: false })
       .limit(limit);
 
@@ -222,9 +214,30 @@ export const getRecentOrders = async (req, res) => {
       return errorResponse(res, `Gagal mengambil pesanan terbaru: ${error.message}`, 500);
     }
 
+    // Enrichment: ambil profil user untuk setiap pesanan
+    const userIds = [...new Set(orders.map(o => o.user_id).filter(Boolean))];
+    let profileMap = {};
+
+    if (userIds.length > 0) {
+      const { data: profiles } = await supabaseAdmin
+        .from('profiles')
+        .select('id, full_name, phone')
+        .in('id', userIds);
+
+      if (profiles) {
+        profileMap = Object.fromEntries(profiles.map(p => [p.id, p]));
+      }
+    }
+
+    // Gabungkan profil ke data pesanan
+    const enrichedOrders = orders.map(order => ({
+      ...order,
+      profile: profileMap[order.user_id] || null,
+    }));
+
     return successResponse(res, 'Pesanan terbaru berhasil diambil', {
-      total: orders.length,
-      orders,
+      total: enrichedOrders.length,
+      orders: enrichedOrders,
     });
   } catch (error) {
     console.error('Error getRecentOrders:', error);

@@ -351,20 +351,15 @@ export const getAllOrders = async (req, res) => {
     const { page, limit, offset } = getPagination(req.query);
     const { status } = req.query;
 
-    // Query dasar
+    // Query count
     let countQuery = supabaseAdmin
       .from('orders')
       .select('*', { count: 'exact', head: true });
 
+    // Query data — tanpa join profiles (orders.user_id → auth.users, bukan profiles)
     let dataQuery = supabaseAdmin
       .from('orders')
-      .select(`
-        *,
-        profiles!orders_user_id_fkey (
-          full_name,
-          phone
-        )
-      `);
+      .select('*');
 
     // Filter berdasarkan status jika disediakan
     if (status) {
@@ -384,8 +379,29 @@ export const getAllOrders = async (req, res) => {
       return errorResponse(res, `Gagal mengambil pesanan: ${error.message}`, 500);
     }
 
+    // Enrichment: ambil profil user untuk setiap pesanan
+    const userIds = [...new Set(orders.map(o => o.user_id).filter(Boolean))];
+    let profileMap = {};
+
+    if (userIds.length > 0) {
+      const { data: profiles } = await supabaseAdmin
+        .from('profiles')
+        .select('id, full_name, phone')
+        .in('id', userIds);
+
+      if (profiles) {
+        profileMap = Object.fromEntries(profiles.map(p => [p.id, p]));
+      }
+    }
+
+    // Gabungkan profil ke data pesanan
+    const enrichedOrders = orders.map(order => ({
+      ...order,
+      profile: profileMap[order.user_id] || null,
+    }));
+
     const pagination = getPaginationMeta(page, limit, total || 0);
-    return paginatedResponse(res, 'Daftar pesanan berhasil diambil', orders, pagination);
+    return paginatedResponse(res, 'Daftar pesanan berhasil diambil', enrichedOrders, pagination);
   } catch (error) {
     console.error('Error getAllOrders:', error);
     return errorResponse(res, 'Terjadi kesalahan server', 500);
