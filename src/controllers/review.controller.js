@@ -33,10 +33,10 @@ export const getProductReviews = async (req, res) => {
       return errorResponse(res, 'Produk tidak ditemukan.', 404);
     }
 
-    // Ambil reviews dengan data profil reviewer
+    // Ambil reviews (tanpa join profiles — reviews.user_id → auth.users, bukan public.profiles)
     const { data: reviews, count, error } = await supabaseAdmin
       .from('reviews')
-      .select('id, rating, comment, created_at, updated_at, profiles(id, full_name, avatar_url)', { count: 'exact' })
+      .select('id, user_id, rating, comment, created_at, updated_at', { count: 'exact' })
       .eq('product_id', productId)
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
@@ -46,21 +46,35 @@ export const getProductReviews = async (req, res) => {
       return errorResponse(res, 'Gagal mengambil ulasan produk.', 500);
     }
 
-    // Format response — rename 'profiles' menjadi 'reviewer' agar lebih deskriptif
-    const formattedReviews = reviews.map((review) => ({
-      id: review.id,
-      rating: review.rating,
-      comment: review.comment,
-      reviewer: review.profiles
-        ? {
-            id: review.profiles.id,
-            full_name: review.profiles.full_name,
-            avatar_url: review.profiles.avatar_url,
-          }
-        : null,
-      created_at: review.created_at,
-      updated_at: review.updated_at,
-    }));
+    // Enrichment: ambil profil reviewer secara terpisah
+    const userIds = [...new Set(reviews.map(r => r.user_id).filter(Boolean))];
+    let profileMap = {};
+
+    if (userIds.length > 0) {
+      const { data: profiles } = await supabaseAdmin
+        .from('profiles')
+        .select('id, full_name, avatar_url')
+        .in('id', userIds);
+
+      if (profiles) {
+        profileMap = Object.fromEntries(profiles.map(p => [p.id, p]));
+      }
+    }
+
+    // Format response — gabungkan profil ke setiap review
+    const formattedReviews = reviews.map((review) => {
+      const profile = profileMap[review.user_id] || null;
+      return {
+        id: review.id,
+        rating: review.rating,
+        comment: review.comment,
+        reviewer: profile
+          ? { id: profile.id, full_name: profile.full_name, avatar_url: profile.avatar_url }
+          : null,
+        created_at: review.created_at,
+        updated_at: review.updated_at,
+      };
+    });
 
     // Buat metadata pagination
     const pagination = getPaginationMeta(page, limit, count || 0);
